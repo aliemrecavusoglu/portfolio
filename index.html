@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ali Emre Çavuşoğlu | Portfolyo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /*------------------------------------
+            GENEL STİLLER (Koyu Tema)
+            ------------------------------------*/
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding-top: 85px;  /* Navbar büyütüldüğü için boşluk korundu */
+        }
+
+        h1, h2, h3 {
+            color: #58a6ff;
+        }
+
+        a {
+            color: #38c7f9;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #58a6ff;
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #30363d;  /* Daha koyu ayırıcı */
+            margin: 40px 0;
+        }
+
+        .fixed-sidebar {
+            position: fixed;
+            left: 20px;     /* Kenardan biraz boşluk */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
+            background: rgba(22, 27, 34, 0.6);      /* Cam efekti */
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 30px;    /* Tam yuvarlak */
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50% !important;
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .sidebar-icon:hover {
+            background: #1f2734 !important;
+            transform: scale(1.2);
+        }
+
+        .sidebar-icon span {
+            display: none;
+        }
+
+        /* --- SABİT YAN MENÜ STİLLERİ --- */
+        /* --- YAN MENÜ DAİMA GÖRÜNÜR STİL --- */
+        .side-navigation {
+            position: fixed;
+            left: 0;    /* Kenara sıfırladık */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;   /* İkonlar arası mesafe */
+        }
+
+        .side-link {
+            background-color: #161b22;
+            color: #8b949e;
+            width: 50px;    /* Sabit genişlik (Sadece ikon görünür) */
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;    /* İçeriği sola yasla */
+            text-decoration: none !important;
+            border-radius: 0 10px 10px 0;   /* Sadece sağ köşeler yuvarlak */
+            border: 1px solid #30363d;
+            border-left: none;  /* Sol kenar ekrana yapışık */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .side-link i {
+            font-size: 24px;
+            min-width: 50px;    /* İkonun kutuda tam ortalanması için genişlik */
+            text-align: center;
+        }
+
+        .side-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #58a6ff; 
+            opacity: 0;
+            padding-left: 5px;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Hover (Üzerine Gelince Sağa Uzama) */
+        .side-link:hover {
+            width: 160px;   /* Kutunun uzayacağı genişlik */
+            background-color: #1f2734;
+            border-color: #58a6ff;
+            color: #58a6ff;
+            box-shadow: 5px 0 15px rgba(88, 166, 255, 0.2);
+        }
+
+        .side-link:hover .side-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Mobilde Navbar olduğu için bunu gizlemek en iyisidir */
+        @media (max-width: 991px) {
+            .side-navigation {
+                display: none;
+            }
+        }
+
+        /*------------------------------------
+            1. YENİ NAVBAR STİLLERİ 
+            ------------------------------------*/
+        .aec-logo {
+            position: relative;
+            display: flex;
+            gap: 4px;
+            padding: 6px 14px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        /* HARFLER */
+        .aec-logo span {
+            color: #60bfe1;
+            text-shadow: 0 0 5px rgba(209, 232, 229, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        /* HARF HOVER HAREKETLERİ */
+        .aec-logo:hover span:nth-child(1) {
+            transform: translateY(-3px);
+        }
+
+        .aec-logo:hover span:nth-child(2) {
+            transform: scale(1.15);
+        }
+
+        .aec-logo:hover span:nth-child(3) {
+            transform: translateY(3px);
+        }
+
+        /* ANİMASYONLU ÇERÇEVE */
+        .aec-logo::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            padding: 3px;
+            pointer-events: none;
+
+            background: linear-gradient(90deg,
+                    transparent,
+                    #1988d1,
+                    transparent);
+            background-size: 300% 300%;
+
+            mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            -webkit-mask-composite: xor;
+
+            animation: borderFlow 4s linear infinite;
+        }
+
+        .aec-logo:hover::before {
+            animation-duration: 2s;
+        }
+
+        /* ÇERÇEVE AKIŞI */
+        @keyframes borderFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 300% 50%;
+            }
+        }
+
+        /* ✅ MOBİL UYUMLU */
+        @media (max-width: 576px) {
+            .aec-logo {
+                font-size: 18px;
+                padding: 4px 10px;
+                letter-spacing: 1px;
+            }
+
+            .aec-logo span {
+                text-shadow: 0 0 3px rgba(42, 184, 224, 0.4);
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #161b22 !important;   /* Daha belirgin bir navbar arka planı */
+            border-bottom: 3px solid #58a6ff;   /* Vurgu çizgisi */
+            padding-top: 10px;  /* Navbar'ı büyütmek için iç boşluk eklendi */
+            padding-bottom: 10px;   /* Navbar'ı büyütmek için iç boşluk eklendi */
+        }
+
+        .navbar-brand {
+            /* AEC logo kullanıldığı için bu stil artık sadece yedek kalabilir */
+            color: #c9d1d9 !important;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+
+        .navbar .nav-link {
+            color: #8b949e !important;
+            font-weight: 500;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .navbar .nav-link:hover {
+            color: #58a6ff !important;
+        }
+
+        /* Dropdown menü stili */
+        .dropdown-menu {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .dropdown-item {
+            color: #c9d1d9 !important;
+            font-size: 1.1rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: #1f2734;
+            color: #58a6ff !important;
+        }
+
+        /*------------------------------------
+            2. HEADER ve PROFİL
+            ------------------------------------*/
+        .header {
+            text-align: center;
+            margin-top: 20px;   /* Navbar altındaki boşluk */
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #8b949e;
+        }
+
+        .profil-alani {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .profil-fotografi img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid #58a6ff;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);   /* Hafif parlaklık */
+        }
+
+        .profil-tanitim {
+            max-width: 600px;
+            text-align: left;
+            line-height: 1.8;
+            font-weight: 400;
+            font-size: 1.1rem;
+            background-color: #161b22;  /* Hafif arka plan */
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #58a6ff;
+        }
+
+        /*-------------------------------------
+            3. KART BÖLÜMLERİ ve YENİ STİLLER
+            -------------------------------------*/
+        .section-card {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: 0.4s;
+            position: relative;
+            border: 1px solid #30363d;
+        }
+
+        .section-card:hover {
+            background-color: #1f2734;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(88, 166, 255, 0.1);
+        }
+
+        .section-card h2 {
+            font-size: 28px;
+            color: #58a6ff;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #58a6ff;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        /* Proje Kartı İçindeki Liste Stili */
+        .project-list-item {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #1f2734;
+            border-radius: 8px;
+            border-left: 3px solid #38c7f9;
+        }
+
+        .project-list-item h3 {
+            color: #c9d1d9;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .project-list-item .tech-stack {
+            color: #8b949e;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 5px;
+            display: block;     /* Yeni satıra geçmesi için */
+        }
+
+
+        /* ZAMAN ÇİZELGESİ (TIMELINE) */
+        .timeline {
+            border-left: 3px solid #30363d;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: ' ';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #58a6ff;
+            border: 3px solid #161b22;
+            border-radius: 50%;
+            left: -29px;
+            top: 5px;
+            z-index: 1;
+        }
+
+        .timeline-item h4 {
+            color: #58a6ff;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item .tarih {
+            color: #8b949e;
+            font-style: italic;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /*-------------------------------------
+            4. SLIDER (YATAY KAYAN RESİMLİ LOGOLAR)
+            -------------------------------------*/
+        /* SLIDER KUTUSU */
+        .slider-container {
+            overflow: hidden;
+            background-color: #161b22;
+            border-radius: 10px;
+            padding: 15px 0;
+        }
+
+        /* KAYAN ŞERİT */
+        .slider-content {
+            display: flex;
+            width: max-content;
+            animation: slide 20s linear infinite;
+        }
+
+        /* TEK TEK BECERİ */
+        .slider-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 30px;
+            opacity: 0.85;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .slider-item img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 5px;
+            object-fit: contain;
+        }
+
+        .slider-item p {
+            font-size: 0.9rem;
+            color: #c9d1d9;
+        }
+
+        /* HOVER */
+        .slider-item:hover {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+
+        /* --- İLETİŞİM FORMU STİLLERİ --- */
+        .contact-wrapper {
+            background: rgba(22, 27, 34, 0.8) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(88, 166, 255, 0.2) !important;
+            padding: 40px !important;   /* Formun içindeki boşluğu artırarak daha ferah gösterir */
+            border-radius: 15px;
+        }
+
+        #custom-contact-form .form-control {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        #custom-contact-form .form-control:focus {
+            background-color: #161b22;
+            border-color: #58a6ff;
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.15);
+            color: #fff;
+        }
+
+        #custom-contact-form label {
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+
+        .contact-btn {
+            background: transparent;
+            color: #58a6ff;
+            border: 1px solid #58a6ff;
+            padding: 10px 40px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: #58a6ff;
+            color: #0d1117;
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+        }
+
+        /* Footer Sosyal Bar Stili */
+        .footer-social-bar {
+            margin-bottom: 15px;    /* Yazı ile arasındaki boşluk */
+            display: flex;
+            justify-content: center;
+            gap: 25px;  /* İkonların kendi aralarındaki boşluk */
+        }
+
+        .footer-social-bar a {
+            color: #8b949e;
+            font-size: 1.6rem;  /* İkon boyutu */
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        /* Üzerine gelince kendi renklerinde parlaması */
+        .footer-social-bar a:hover {
+            transform: translateY(-3px);     /* Hafif yukarı kalkma */
+        }
+
+        .footer-social-bar a[title="GitHub"]:hover {
+            color: #f0f6fc;
+            text-shadow: 0 0 10px #f0f6fc;
+        }
+
+        .footer-social-bar a[title="LinkedIn"]:hover {
+            color: #0a66c2;
+            text-shadow: 0 0 10px #0a66c2;
+        }
+
+        .footer-social-bar a[title="Instagram"]:hover {
+            color: #e4405f;
+            text-shadow: 0 0 10px #e4405f;
+        }
+
+        .footer-social-bar a[title="YouTube"]:hover {
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        /* Mobil için textarea yüksekliğini ayarla */
+        @media (max-width: 768px) {
+            #message {
+                height: 100px !important;
+            }
+        }
+
+        /* ✅ GERÇEK KAYAN + SONSUZ ANİMASYON */
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ÜSTÜNE GELİNCE DUR */
+        .slider-container:hover .slider-content {
+            animation-play-state: paused;
+        }
+
+
+        @keyframes kaydirma {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-400%);
+            }
+        }
+
+        .slider-container:hover .slider-content {
+            animation-play-state: paused;
+        }
+
+        /*-------------------------------------
+            5. DÜZENLEME (Responsive)
+            -------------------------------------*/
+        @media (max-width: 992px) {
+
+            /* Tablet ve altı için navbartoggle */
+            .navbar-collapse {
+                background-color: #161b22;
+                border-top: 1px solid #30363d;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profil-alani {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profil-tanitim {
+                text-align: center;
+                border-left: none;
+                border-top: 5px solid #58a6ff;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .timeline {
+                padding-left: 10px;
+                border-left: none;
+            }
+
+            .timeline-item::before {
+                display: none;
+            }
+
+            body {
+                padding-top: 75px;  /* Küçük ekranlarda navbar biraz daha küçülür */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a href="#anasayfa" class="aec-logo">
+                <span>A</span><span>E</span><span>C</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#anasayfa">Anasayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hakkimda">Hakkımda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#deneyim-egitim">Deneyim & Eğitim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#becerilerim">Becerilerim</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#projelerim" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Projelerim
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <h6 class="dropdown-header text-info">Projeler</h6>
+                            </li>
+                            <li><a class="dropdown-item nav-link-item" href="#proje1">Proje 1: Web Arayüzü</a></li>
+                            <li><a class="dropdown-item nav-link-item" href="#proje2">Proje 2: Kütüphane Sistemi</a></li>
+                            <li><a class="dropdown-item nav-link-item" href="#proje3">Proje 3</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item nav-link-item" href="https://github.com/aliemrecavusoglu"
+                                    target="_blank"><i class="fa-brands fa-github me-1"></i> Tüm GitHub Repoları</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#iletisim">İletişim</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="anasayfa" class="header">
+            <h1>Ali Emre Çavuşoğlu</h1>
+            <p>Yazılım Mühendisliği Öğrencisi | Öğrenmeye Açık Geliştirici Adayı</p>
+        </div>
+
+        <hr>
+
+        <div class="profil-alani">
+            <div class="profil-fotografi">
+                <img src="resimler/kendim.jpg" alt="Profil Fotoğrafı">
+            </div>
+            <div class="profil-tanitim">
+                <p>Selam! Ben Ali Emre. Aksaray Üniversitesi'nde Yazılım Mühendisliği 2. sınıf öğrencisiyim.
+                    Özellikle C# diline ve masaüstü/web uygulamaları geliştirmeye ilgi duyuyorum.
+                    Temel web teknolojileri (HTML, CSS, JavaScript) ve Python alanlarında kendimi sürekli
+                    geliştiriyorum. Öğrenmeye hevesli ve kendimi geliştirmeye çalışan birisiyim.
+                    Hedefim, yazılım dünyasında kalıcı ve üretken bir geliştirici olarak yer almak.
+                </p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="hakkimda" class="section-card">
+            <h2>Hakkımda ✨</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Hakkımda Detay</h3>
+                    <p>Merhaba, ben Ali Emre. 2 Mayıs 2006, Kayseri doğumluyum. Öğrenim hayatımı Kayseri'de
+                        tamamladıktan sonra,yazılıma olan tutkumun peşinden giderek Aksaray Üniversitesi'nde 
+                        Yazılım Mühendisliği bölümüne başladım.
+                        Şu an 2. sınıf öğrencisiyim ve akademik bilgimi pratik projelerle pekiştiriyorum.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h3>İlgi Alanları</h3>
+                    <ul class="list-unstyled">
+                        <li><i class="fa-solid fa-laptop-code text-info me-2"></i> Masaüstü Uygulama Geliştirme (C#
+                            Windows
+                            Forms)</li>
+                        <li><i class="fa-brands fa-html5 text-info me-2"></i> Responsive Web Tasarımı</li>
+                        <li><i class="fa-solid fa-puzzle-piece text-info me-2"></i> Problem Çözme ve Algoritma</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="deneyim-egitim" class="section-card">
+            <h2>Eğitim ve Deneyim 📜</h2>
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <h4>Yazılım Mühendisliği Lisans Eğitimi</h4>
+                    <span class="tarih">2024 - Devam Ediyor</span>
+                    <p><strong>Aksaray Üniversitesi</strong> | 2. Sınıf Öğrencisi. Algoritma, Veri Yapıları, Veri
+                        Tabanı,
+                        Nesne Yönelimli Programlama odaklı dersler alıyorum.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Atatürk Anadolu Lisesi</h4>
+                    <span class="tarih">2020 - 2024</span>
+                    <p>Lise öğrenimi. Matematik ve teknolojiye merakım vardı. O yüzden yazılım mühendisliği bölümüne
+                        geldim.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Sümer Ortaokulu</h4>
+                    <span class="tarih">2016 - 2020</span>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Sümer Osman Göksu İlkokulu</h4>
+                    <span class="tarih">2012 - 2016</span>
+                </div>
+
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="becerilerim" class="section-card">
+            <h2>Becerilerim 🛠️</h2>
+
+            <div class="slider-container">
+                <div class="slider-content">
+
+                    <!-- SET 1 -->
+                    <span class="slider-item"><img src="resimler/html5.png">
+                        <p>HTML</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/css.png">
+                        <p>CSS</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/js.png">
+                        <p>JavaScript</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/csharp.png">
+                        <p>C#</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/python.png">
+                        <p>Python</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/java.png">
+                        <p>Java</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/Bootstrap.png">
+                        <p>Bootstrap</p>
+                    </span>
+
+                    <!-- SET 2 (AYNI İÇERİK – SONSUZLUK İÇİN) -->
+                    <span class="slider-item"><img src="resimler/html5.png">
+                        <p>HTML</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/css.png">
+                        <p>CSS</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/js.png">
+                        <p>JavaScript</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/csharp.png">
+                        <p>C#</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/python.png">
+                        <p>Python</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/java.png">
+                        <p>Java</p>
+                    </span>
+                    <span class="slider-item"><img src="resimler/Bootstrap.png">
+                        <p>Bootstrap</p>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="projelerim" class="section-card">
+            <h2>Projelerim 💻</h2>
+
+            <div id="proje3" class="project-list-item">
+                <h3><i class="fa-brands fa-html5 me-2"></i> Proje 1: Kişisel Blog/Portfolyo Arayüzü</h3>
+                <span class="tech-stack">Kullanılan Diller/Teknolojiler: HTML5, CSS3, JavaScript, Bootstrap 5</span>
+            </div>
+
+            <div id="proje1" class="project-list-item">
+                <h3><i class="fa-solid fa-desktop me-2"></i> Proje 2: Kütüphane Otomasyon Sistemi</h3>
+                <span class="tech-stack">Kullanılan Diller/Teknolojiler: C#, Windows Forms, SQL Server</span>
+            </div>
+
+            <div id="proje2" class="project-list-item">
+                <h3><i class="fa-brands fa-python me-2"></i> Proje 3</h3>
+                <span class="tech-stack">Kullanılan Diller/Teknolojiler: Python</span>
+            </div>
+            <p class="text-center mt-4 text-secondary">Tüm bu projelerin detaylarına GitHub profilimden ulaşabilirsiniz.
+            </p>
+        </div>
+
+        <hr>
+
+        <div id="iletisim" class="section-card contact-wrapper">
+            <div class="container-fluid px-0">
+                <h2 class="mb-4">Bana Ulaşın 🗨️</h2>
+                <form id="custom-contact-form" action="https://formspree.io/f/mbdlrngv" method="POST">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" name="ad-soyad" class="form-control" id="name" placeholder="Adınız" required>
+                                <label for="name">Adınız</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" name="email" class="form-control" id="email" placeholder="E-posta" required>
+                                <label for="email">E-posta</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <textarea name="mesaj" class="form-control" id="message" placeholder="Mesajınız" style="height: 150px"
+                            required></textarea>
+                        <label for="message">Mesajınız...</label>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="contact-btn">
+                            <span>MESAJI GÖNDER</span>
+                            <i class="fa-solid fa-paper-plane ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
+        <footer style="text-align: center; padding: 40px 10px; color: #8b949e;">
+            <div class="footer-social-bar">
+                <a href="https://github.com/aliemrecavusoglu" target="_blank" title="GitHub"><i
+                        class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/ali-emre-%C3%A7avu%C5%9Fo%C4%9Flu-3b9459330/" target="_blank"
+                    title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/aliemre.38/" target="_blank" title="Instagram"><i
+                        class="fa-brands fa-instagram"></i></a>
+            </div>
+
+            <p>© 2025 Ali Emre Çavuşoğlu | Tüm Hakları Saklıdır.</p>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //Navbar Bağlantılarına Yumuşak Kaydırma (Smooth Scrolling)
+            $('.nav-link, .nav-link-item, .side-link').on('click', function (e) {
+                const hash = this.hash;
+
+                if (hash !== "" && hash.startsWith('#')) {
+                    e.preventDefault();
+
+                    const navbarHeight = $('.navbar').outerHeight();
+                    let offset = 20;
+
+                    if (hash === '#anasayfa') {
+                        offset = 0;
+                    } else {
+                        offset = navbarHeight + 20;
+                    }
+
+                    if ($('.navbar-collapse').hasClass('show')) {
+                        $('.navbar-toggler').click();
+                    }
+
+
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top - offset
+                    }, 200);    /*Scroll (aşağı kaydırma) süresi*/
+                }
+            });
+
+            //Projeler Kartına Hover Efekti (Korundu)
+            $('#projelerim').hover(
+                function () {
+                    $(this).find('.placeholder-content').css({
+                        'background-color': '#161b22',
+                        'border-color': '#58a6ff'
+                    });
+                },
+                function () {
+                    $(this).find('.placeholder-content').css({
+                        'background-color': '#0d1117',
+                        'border-color': '#38c7f9'
+                    });
+                }
+            );
+
+            //İletişim Bağlantısına Tıklama Animasyonu
+            $('#email-link').on('click', function () {
+                const link = $(this);
+                link.css('color', '#ff7b72');
+                setTimeout(function () {
+                    link.css('color', '#38c7f9');
+                }, 300);
+            });
+
+            //Header'a Fade-In Efekti
+            $('.header').css('opacity', 0).delay(200).animate({
+                opacity: 1
+            }, 1500);
+
+            //Kartlara Yavaşça Görünme Efekti
+            $('.section-card').css('opacity', 0);
+
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.bottom >= 0
+                );
+            }
+
+            function checkCardsVisibility() {
+                $('.section-card').each(function (i, el) {
+                    if (isElementInViewport(el) && $(el).css('opacity') == 0) {
+                        $(el).delay(i * 100).animate({
+                            opacity: 1
+                        }, 800);
+                    }
+                });
+            }
+
+            //Sayfa yüklendiğinde ve kaydırıldığında kontrol et
+            $(window).on('scroll resize', checkCardsVisibility);
+            checkCardsVisibility(); // Sayfa yüklendiğinde ilk kontrol
+        });
+    </script>
+
+</body>
+
+</html>
