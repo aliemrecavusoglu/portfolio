@@ -28,10 +28,6 @@ amacıyla hazırlanmıştır.
 ## 🔗 Canlı Önizleme
 > GitHub Pages ile yayınlanabilir
 
-## 📬 İletişim
-- GitHub: https://github.com/aliemrecavusoglu
-- LinkedIn: (profil linkin)
-
 ---
 
 © 2025 Ali Emre Çavuşoğlu
